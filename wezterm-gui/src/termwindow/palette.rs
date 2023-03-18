@@ -282,6 +282,12 @@ impl CommandPalette {
                             .to_linear()
                             .into(),
                     })
+                    .padding(BoxDimension {
+                        left: Dimension::Cells(1.0),
+                        right: Dimension::Cells(1.0),
+                        top: Dimension::Cells(0.125),
+                        bottom: Dimension::Cells(0.5),
+                    })
                     .display(DisplayType::Block),
             ];
 
@@ -317,15 +323,20 @@ impl CommandPalette {
                 .command_palette_fg_color
                 .to_linear()
                 .into();
+            let solid_selection_color: InheritableColor = term_window
+                .config
+                .command_palette_selection_color
+                .to_linear()
+                .into();
 
             let (bg, text) = if display_idx == selected_row {
-                (solid_fg_color.clone(), solid_bg_color.clone())
+                (solid_selection_color.clone(), solid_bg_color.clone())
             } else {
                 (LinearRgba::TRANSPARENT.into(), solid_fg_color.clone())
             };
 
             let (label_bg, label_text) = if display_idx == selected_row {
-                (solid_fg_color.clone(), solid_bg_color.clone())
+                (solid_selection_color.clone(), solid_bg_color.clone())
             } else {
                 (solid_bg_color.clone(), solid_fg_color.clone())
             };
@@ -431,10 +442,10 @@ impl CommandPalette {
                         text,
                     })
                     .padding(BoxDimension {
-                        left: Dimension::Cells(0.25),
-                        right: Dimension::Cells(0.25),
-                        top: Dimension::Cells(0.),
-                        bottom: Dimension::Cells(0.),
+                        left: Dimension::Cells(1.0),
+                        right: Dimension::Cells(1.0),
+                        top: Dimension::Cells(0.15),
+                        bottom: Dimension::Cells(0.15),
                     })
                     .min_width(Some(Dimension::Percent(1.)))
                     .display(DisplayType::Block),
@@ -480,31 +491,30 @@ impl CommandPalette {
                 bottom: Dimension::Cells(0.25),
             })
             .padding(BoxDimension {
-                left: Dimension::Cells(0.25),
-                right: Dimension::Cells(0.25),
                 top: Dimension::Cells(0.25),
                 bottom: Dimension::Cells(0.25),
+                ..Default::default()
             })
-            .border(BoxDimension::new(Dimension::Pixels(1.)))
+            // .border(BoxDimension::new(Dimension::Pixels(1.)))
             .border_corners(Some(Corners {
                 top_left: SizedPoly {
-                    width: Dimension::Cells(0.25),
-                    height: Dimension::Cells(0.25),
+                    width: Dimension::Cells(0.5),
+                    height: Dimension::Cells(0.5),
                     poly: TOP_LEFT_ROUNDED_CORNER,
                 },
                 top_right: SizedPoly {
-                    width: Dimension::Cells(0.25),
-                    height: Dimension::Cells(0.25),
+                    width: Dimension::Cells(0.5),
+                    height: Dimension::Cells(0.5),
                     poly: TOP_RIGHT_ROUNDED_CORNER,
                 },
                 bottom_left: SizedPoly {
-                    width: Dimension::Cells(0.25),
-                    height: Dimension::Cells(0.25),
+                    width: Dimension::Cells(0.5),
+                    height: Dimension::Cells(0.5),
                     poly: BOTTOM_LEFT_ROUNDED_CORNER,
                 },
                 bottom_right: SizedPoly {
-                    width: Dimension::Cells(0.25),
-                    height: Dimension::Cells(0.25),
+                    width: Dimension::Cells(0.5),
+                    height: Dimension::Cells(0.5),
                     poly: BOTTOM_RIGHT_ROUNDED_CORNER,
                 },
             }))
